@@ -8,14 +8,22 @@ var gulp      = require('gulp')
   //   console.log('Test task is running. All is right in the world');
   // })
 
-  gulp.task('concat-css', function(){
+  gulp.task('minify-css', function(){
     gulp.src('public/dev/css/*.css')
       .pipe(concat('application.min.css'))
+      .pipe(uglifycss())
       .pipe(gulp.dest('public/css')) //piping vs promises? whats the difference
   })
 
-  gulp.watch('public-dev/css/*.css', ['concat-css'])
+  gulp.task('nodemon', function(){
+    nodemon({
+      ext: 'js html css', //anytime there are changes any of these types of files, it'll restart nodemon
+      env: {'NODE_ENV': 'development'} //let heroku handle the server you're on an actual production environment
+    })
+  })
 
-  gulp.task('default', ["test"], function(){
+  gulp.watch('public-dev/css/*.css', ['minify-css'])
+
+  gulp.task('default', ["nodemon"], function(){
     console.log('Default task: winning!');
   })
