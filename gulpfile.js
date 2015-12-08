@@ -1,10 +1,11 @@
-var gulp      = require('gulp')
-,   concat    = require('gulp-concat')
-,   uglify    = require('gulp-uglify')
-,   uglifycss = require('gulp-uglifycss')
-,   nodemon   = require('gulp-nodemon')
+var gulp         = require('gulp')
+,   concat       = require('gulp-concat')
+,   uglify       = require('gulp-uglify')
+,   uglifycss    = require('gulp-uglifycss')
+,   nodemon      = require('gulp-nodemon')
 ,   jsmin     = require('gulp-jsmin')
 ,   rename    = require('gulp-rename')
+,   browser-sync = require('browser-sync')
 
   // gulp.task('test', function(){
   //   console.log('Test task is running. All is right in the world');
@@ -36,4 +37,12 @@ var gulp      = require('gulp')
 
   gulp.task('default', ["nodemon"], function(){
     console.log('Default task: winning!');
+  })
+  gulp.task('browser-sync', ["nodemon"], function(){
+    browserSync.init(null, {
+      proxy: 'http://localhost:3000',
+      files: ['public-dev/**/*.*'],//any directory is ** and *.* is all files with all extensions
+      browser: 'google chrome',
+      port: 7000
+    })
   })

@@ -15,6 +15,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "browser-sync": "^2.10.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jsmin": "^0.1.5",
