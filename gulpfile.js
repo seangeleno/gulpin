@@ -5,7 +5,7 @@ var gulp         = require('gulp')
 ,   nodemon      = require('gulp-nodemon')
 ,   jsmin     = require('gulp-jsmin')
 ,   rename    = require('gulp-rename')
-,   browser-sync = require('browser-sync')
+,   browserSync = require('browser-sync')
 
   // gulp.task('test', function(){
   //   console.log('Test task is running. All is right in the world');
@@ -16,6 +16,7 @@ var gulp         = require('gulp')
       .pipe(concat('application.min.css'))
       .pipe(uglifycss())
       .pipe(gulp.dest('public/css')) //piping vs promises? whats the difference
+      .pipe(browserSync.stream())
   })
 
   gulp.task('minify-js', function(){
@@ -23,6 +24,15 @@ var gulp         = require('gulp')
     .pipe(concat('application.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('public/js'))
+  })
+
+  gulp.task('browser-sync', ["nodemon"], function(){
+    browserSync.init(null, {
+      proxy: 'http://localhost:3000',
+      files: ['public-dev/**/*.*'],//any directory is ** and *.* is all files with all extensions
+      browser: 'google chrome',
+      port: 7000
+    })
   })
 
   gulp.task('nodemon', function(){
@@ -35,14 +45,6 @@ var gulp         = require('gulp')
   gulp.watch('public-dev/css/*.css', ['minify-css'])
   gulp.watch('public-dev/js/*.js', ['minify-js'])
 
-  gulp.task('default', ["nodemon"], function(){
+  gulp.task('default', ["browser-sync"], function(){
     console.log('Default task: winning!');
-  })
-  gulp.task('browser-sync', ["nodemon"], function(){
-    browserSync.init(null, {
-      proxy: 'http://localhost:3000',
-      files: ['public-dev/**/*.*'],//any directory is ** and *.* is all files with all extensions
-      browser: 'google chrome',
-      port: 7000
-    })
   })
