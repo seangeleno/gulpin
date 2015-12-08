@@ -10,7 +10,11 @@ var gulp      = require('gulp')
 
   gulp.task('concat-css', function(){
     gulp.src('public/dev/css/*.css')
+      .pipe(concat('application.min.css'))
+      .pipe(gulp.dest('public/css')) //piping vs promises? whats the difference
   })
+
+  
 
   gulp.task('default', ["test"], function(){
     console.log('Default task: winning!');
