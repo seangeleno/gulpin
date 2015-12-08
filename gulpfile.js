@@ -14,7 +14,7 @@ var gulp      = require('gulp')
       .pipe(gulp.dest('public/css')) //piping vs promises? whats the difference
   })
 
-  
+  gulp.watch('public-dev/css/*.css', ['concat-css'])
 
   gulp.task('default', ["test"], function(){
     console.log('Default task: winning!');
